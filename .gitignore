@@ -1,0 +1,5 @@
+datas.csv
+assets/bower_components
+node_modules/
+*.txt
+*.log
