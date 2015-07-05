@@ -1,61 +1,46 @@
-var stream = require('stream')
-var P4Filter = new stream.Transform( { objectMode: true } )
+var stream = require('stream');
+var util = require('util');
 var os = require('os'); 
+var debug = require('debug')('p4Filter');
 
-P4Filter._processBuffer = function() {
+var Transform = stream.Transform;
+util.inherits(P4Filter, Transform);
 
-	if (!this._buff)
-		return;
-	
-	// check if string has newline symbol
-	if (this._buff.indexOf(os.EOL) !== -1) {
-		if (this._buff.indexOf('#1') !== -1) {
-			// push to stream skipping this line line
-			this.push(this._buff.slice(this._buff.indexOf(os.EOL) + 2));
-			// clear string buffer
-			this._buff = null;
-		}
-	}
+function P4Filter(options)
+{
+  if (!(this instanceof P4Filter))
+    return new P4Filter(options);
+
+  if(options && options.excludeFilters)
+  {
+    this._excludeFilters = options.excludeFilters;
+    debug('exclude filters: ' + this._excludeFilters);
+  }
+
+  Transform.call(this, { objectMode: true });
 }
 
+P4Filter.prototype._transform = function (chunk, encoding, done) {
+  var buff = chunk.toString();
+  if (buff && buff.length > 0)
+  {
+    buff = buff + os.EOL;
+    if (this._excludeFilters)
+    {
+      var bInclude = true;
+      this._excludeFilters.forEach(function(element, index){
+        if (buff.indexOf(element) !== -1)
+          bInclude = false;
+      });
 
-P4Filter._transform = function (chunk, encoding, done) {
-
-	var buff = chunk.toString();
-	if (buff && buff.length > 0)
-	{
-		buff = buff + os.EOL;
-		if (buff && buff.indexOf('#1') === -1
-			&& buff.indexOf('QA/Automation') === -1
-			&& buff.indexOf('qa/Automation') === -1)
-			this.push(buff);
-	}
-	
-	/*
-	if (!this._buff)
-		this._buff = chunk.toString();
-	else
-		this._buff += chunk.toString();
-	
-	if (!this._buff)
-		return;
-	
-	// check if string has newline symbol
-	if (this._buff.indexOf(os.EOL) !== -1) {
-		if (this._buff.indexOf('#1') === -1) {
-			// push to stream skipping this line line
-			this.push(this._buff.slice(this._buff.indexOf(os.EOL) + 2));
-			// clear string buffer
-			this._buff = null;
-		}
-	}
-	*/
-
-	done();
+      if (bInclude)
+        this.push(buff);
+    }
+  }
+  done();
 }
 
-P4Filter._flush = function (done) {
-	//this._processBuffer();
+P4Filter.prototype._flush = function (done) {
 	done()
 }
 
