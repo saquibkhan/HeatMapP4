@@ -1,14 +1,18 @@
 {
-  "name": "ArcheoloP4",
+  "name": "heatmap-p4",
   "version": "0.1.0",
   "description": "Heat map for P4 changes",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "bower install"
+  },
+  "bin": {
+    "heatmap-p4": "bin/heatmap-p4.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/saquibkhan/ArcheoloP4.git"
+    "url": "https://github.com/saquibkhan/HeatMapP4.git"
   },
   "keywords": [
     "heatmap",
@@ -17,10 +21,11 @@
   "author": "Saquib Khan <saquibofficial@gmail.com> (https://github.com/saquibkhan)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/saquibkhan/ArcheoloP4/issues"
+    "url": "https://github.com/saquibkhan/HeatMapP4/issues"
   },
-  "homepage": "https://github.com/saquibkhan/ArcheoloP4",
-  "devDependencies": {
+  "homepage": "https://github.com/saquibkhan/HeatMapP4",
+  "devDependencies": {},
+  "dependencies": {
     "debug": "^2.2.0"
   }
 }

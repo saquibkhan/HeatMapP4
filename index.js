@@ -2,21 +2,26 @@ var fs = require('fs');
 var os = require('os');
 var debug = require('debug')('main');
 var Liner = require('./liner');
-var p4Filter = require('./p4Filter');
+var P4Filter = require('./p4Filter');
 var path = require('path');
 var http = require("http");
 var url = require('url');
 
 var depotPath = '';
-var dataFile = 'datas.csv';
+var dataFile = path.resolve(__dirname, 'datas.csv');
+var tmpAllFiles = path.resolve(__dirname, 'files.txt');
+var tmpAllChanglists = path.resolve(__dirname, 'changes.txt');
 
-var tmpAllFiles = 'files.txt';
-var tmpAllChanglists = 'changes.txt';
-var maxWorkers = 10;
+debug('Process Arg: ' + process.argv);
+
+debug(dataFile);
+debug(tmpAllFiles);
+debug(tmpAllChanglists);
 
 var exec = require('child_process').exec;
 
 var changeDesc = {};
+var excludeFilters = [];
 
 if (!process.argv[2])
 {
@@ -29,9 +34,51 @@ else
   debug('depotPath: ' + depotPath);
 }
 
+if (process.argv[3] && process.argv[3] === '--clear-cache')
+{
+  console.log('removing cache...');
+  removeFile(dataFile);
+  removeFile(tmpAllFiles);
+  removeFile(tmpAllChanglists);
+}
+else
+{
+  console.log('Using existing cache');
+}
+
+if (process.argv[3] && process.argv[3] === '--exclude')
+{
+  processFilters(4);
+}
+else if (process.argv[4] && process.argv[4] === '--exclude')
+{
+  processFilters(5);
+}
+
+function processFilters(index)
+{
+  debug('processing filters');
+  while (process.argv[index])
+  {
+    excludeFilters.push(process.argv[index]);
+    index++;
+  }
+  debug('exclude filters: ' + excludeFilters);
+}
+
+function removeFile(file)
+{
+  fs.exists(file, function(exists){
+    if (exists)
+    {
+      fs.unlinkSync(file);
+    }
+  });
+}
+
 console.log('Please Wait...');
 
-fs.exists(path.resolve(__dirname, dataFile), function(exists){
+fs.exists(dataFile, function(exists){
   if (!exists)
   {
     var headerLine = 'date,commits,filePath' + os.EOL;
@@ -42,7 +89,7 @@ fs.exists(path.resolve(__dirname, dataFile), function(exists){
       }
     });
 
-    fs.exists(path.resolve(__dirname, tmpAllFiles), function(exists){
+    fs.exists(tmpAllFiles, function(exists){
       if (!exists)
       {
         GenereateFilePath();
@@ -68,6 +115,7 @@ function GenereateFilePath()
   var spawn = require('child_process').spawn,
   ls = spawn('p4', ['files', depotPath]);
   var liner = new Liner();
+  var p4Filter = new P4Filter({excludeFilters: excludeFilters.length > 0? excludeFilters: null});
   ls.stdout
   .pipe(liner)
   .pipe(p4Filter)
@@ -134,7 +182,7 @@ function FetchChangeListsInternal()
 function FetchChangeLists()
 {
   
-  fs.exists(path.resolve(__dirname, tmpAllChanglists), function(exists){
+  fs.exists(tmpAllChanglists, function(exists){
     if (exists)
     {
       //Read From File

@@ -1,41 +1,24 @@
-ArcheoloP4
+HeatMapP4
 ===========
+
+####Purpose
+Where should you focus the maintenance efforts? HeatMapP4 is a visualization of age and dev activity for software, powered by d3.js.
+
+####Legends
+1. Block size specifies the number of changelists, larger the area means ,ore changes done
+2. Color goes from red to green depending on tha last change date, if changed recently then block will be shown as red
+3. Each block can represent a file or folder based on depth chosen
+
+####Usage
+```sh
+npm install heatmap-p4 -g
+heatmap-p4 depot-path
+```
+
+Browse to [http://0.0.0.0:8000/](http://0.0.0.0:8000/)
+
 
 Referecnce: [ArcheoloGit](https://github.com/marmelab/ArcheoloGit)
 
-This is similiar to ArcheoloGit but for perforce
-
-Where should you focus the maintenance efforts? ArcheoloGit is a visualization of age and dev activity for software, powered by d3.js.
-
-
-* clone the project
-
-```sh
-    git clone https://github.com/saquibkhan/ArcheoloP4.git
-    cd ArcheoloP4
-```
-
-* install server dependencies using Bower
-
-```sh
-bower install
-```
-
-* run the `run.sh` script with the path of the project you want to analyze as argument.
-
-```sh
-./run.sh /depot path
-```
-
-* run a simple local server on the root, for instance with SimpleHttpServer:
-
-```sh
-# Python 2.7
-python -m SimpleHTTPServer
-# Python 3
-python -m http.server
-```
-
-* browse to the index, for instance [http://0.0.0.0:8000/](http://0.0.0.0:8000/) if you use SimpleHttpServer
 
 ![angular.js ArcheoloGit](http://marmelab.com/ArcheoloGit/angularjs.png)

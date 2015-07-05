@@ -9,7 +9,7 @@ util.inherits(Liner, Transform);
 function Liner()
 {
   if (!(this instanceof Liner))
-    return new Liner(options);
+    return new Liner();
 
   Transform.call(this, { objectMode: true });
   this._lastLineData = null;
