@@ -69,12 +69,10 @@ function processFilters(index)
 
 function removeFile(file)
 {
-  fs.exists(file, function(exists){
-    if (exists)
-    {
-      fs.unlinkSync(file);
-    }
-  });
+  if (fs.existsSync(file))
+  {
+    fs.unlinkSync(file);
+  }
 }
 
 console.log('Please Wait...');

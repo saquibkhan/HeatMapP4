@@ -15,6 +15,15 @@ npm install heatmap-p4 -g
 heatmap-p4 depotPath [--clear-cache] [--exclude] [exclude patterns]
 ```
 
+e.g.
+```sh
+node index.js //depotpath/FolderPath/ --clear-cache --exclude '#1' QA/Automation qa/Automation
+```
+--clear-cache: Removes cache and regenerates history from P4
+--exclude: Excludes folders path etc.
+'#1' - Excludes files which are never changed or newly added
+QA/Automation - Exclude the folder QA/Automation
+
 Browse to [http://0.0.0.0:8000/](http://0.0.0.0:8000/)
 
 
