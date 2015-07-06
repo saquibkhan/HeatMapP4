@@ -253,7 +253,9 @@ function ServeStaticFiles(request, response)
 {
   var filePath = '.' + request.url;
   if (filePath == './')
-    filePath = './index.html';
+    filePath = path.resolve(__dirname, 'index.html');
+  else
+    filePath = __dirname + request.url;
 
   var extname = path.extname(filePath);
   var contentType = 'text/html';
