@@ -17,7 +17,7 @@ heatmap-p4 depotPath [--clear-cache] [--exclude] [exclude patterns]
 
 e.g.
 ```sh
-node index.js //depotpath/FolderPath/ --clear-cache --exclude '#1' QA/Automation qa/Automation
+heatmap-p4 //depotpath/ --clear-cache --exclude '#1' QA/Automation qa/Automation
 ```
 --clear-cache: Removes cache and regenerates history from P4
 --exclude: Excludes folders path etc.

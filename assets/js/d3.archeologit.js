@@ -328,7 +328,7 @@ d3.chart.archeologit = function() {
                 class: "file"
             });
 
-            if(cursor.days < days) {
+            if(cursor.days > days) {
                 cursor.days = days;
             }
 
@@ -346,7 +346,7 @@ d3.chart.archeologit = function() {
             if(child.name === path) {
                 var childInfo = createPath(child, level + 1, file);
                 child.commits += childInfo.commits;
-                child.days = Math.max(childInfo.days, child.days);
+                child.days = Math.min(childInfo.days, child.days);
 
                 return childInfo;
             }

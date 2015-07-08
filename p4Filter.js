@@ -34,7 +34,7 @@ P4Filter.prototype._transform = function (chunk, encoding, done) {
       });
 
       if (bInclude)
-        this.push(buff);
+        this.push(buff.toLowerCase());
     }
   }
   done();
