@@ -1,6 +1,6 @@
 {
   "name": "heatmap-p4",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Heat map for P4 changes",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/saquibkhan/HeatMapP4.git#v0.1.5"
+    "url": "https://github.com/saquibkhan/HeatMapP4.git#v0.1.6"
   },
   "keywords": [
     "heatmap",

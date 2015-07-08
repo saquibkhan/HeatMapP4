@@ -24,6 +24,7 @@ P4Filter.prototype._transform = function (chunk, encoding, done) {
   var buff = chunk.toString();
   if (buff && buff.length > 0)
   {
+    buff = buff.toLowerCase();
     buff = buff + os.EOL;
     if (this._excludeFilters)
     {
@@ -34,7 +35,7 @@ P4Filter.prototype._transform = function (chunk, encoding, done) {
       });
 
       if (bInclude)
-        this.push(buff.toLowerCase());
+        this.push(buff);
     }
   }
   done();

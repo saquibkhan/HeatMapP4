@@ -61,7 +61,7 @@ function processFilters(index)
   debug('processing filters');
   while (process.argv[index])
   {
-    excludeFilters.push(process.argv[index]);
+    excludeFilters.push(process.argv[index].toLowerCase());
     index++;
   }
   debug('exclude filters: ' + excludeFilters);
