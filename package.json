@@ -1,6 +1,6 @@
 {
-  "name": "heatmap-p4",
-  "version": "0.1.6",
+  "name": "@saquibkhan/HeatMapP4",
+  "version": "1.0.0",
   "description": "Heat map for P4 changes",
   "main": "index.js",
   "scripts": {
