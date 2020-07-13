@@ -11,7 +11,8 @@ Where should you focus the maintenance efforts? HeatMapP4 is a visualization of 
 
 # Usage
 ```sh
-npm install heatmap-p4 -g
+npm install -g @saquibkhan/heatmapp4@1.0.0
+
 heatmap-p4 depotPath [--clear-cache] [--exclude] [exclude patterns]
 ```
 
